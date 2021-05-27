@@ -11,11 +11,11 @@ and on the FileSet ID will show you the details of the FileSet / Payload in ques
 
 Usage : Run this on your v.14 Server on Linux or macOS , as a user that can write to 
 your web admin directory. 
-The script will give you the link to the resulting webpage.  
+The script will give you the link to the resulting webpage, which is hosted by the webserver that is already in place.  
 
 ```/usr/local/filewave/python/bin/python ./fs-popularity.py```
 
-Advanced Usage : Have a look at the variables in the 
+Advanced Usage : Have a look at the variables in the first few lines of [script](./fs-popularity.py)
 
 If you want a version of that webpage that is regularly updated, schedule a cronjob .
 
