@@ -4,7 +4,7 @@ If you need to create a replica of a production FileWave Server without copying 
 you won't be able to update the model on the replicaa unless you have all the configuration profile data content on disk. 
 This script prepares that data in a directly copyable format , so you can get testing more quickly on your replica. 
 
-Ussage
+Usage
 
     /usr/local/filewave/python/bin/python ./extract-profiles.py
 
