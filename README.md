@@ -8,3 +8,5 @@ A repo containing various small projects related to [FileWave](https://www.filew
 [Extract Profiles](./extract-profiles/) - extract all configuration profile containing files out of a server, to ease creation of test server clones
 
 [Clean Booster Directories](./clean-booster-directories) - remove files belonging to unused filesets from a booster's storage
+
+[Comments to Custom Field](./comments-to-customfield) - make your client comments visible in a custom inventory field

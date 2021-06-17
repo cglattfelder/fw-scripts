@@ -1,0 +1,17 @@
+[
+    {
+        "choices": [
+        ],
+        "data_type": "string",
+        "default_value": "",
+        "description": "",
+        "display_name": "fw_comment",
+        "field_name": "fw_comment",
+        "is_global": true,
+        "metadata": {
+        },
+        "provider": 0,
+        "to_be_deleted": false,
+        "used_in_workflows": false
+    }
+]
