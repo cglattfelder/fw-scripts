@@ -9,10 +9,9 @@ This will more accurately reflect when the client was last in touch with filewav
 
 ## Installation 
 
-  Create a custom field called fw_comment , or import the custom field from fw_comment.customfields in this directory. 
-  Create a custom field called fw_lastconnect ( datetime format ) , or import the custom field from fw_lastconnect.customfields in this directory.
-  Copy the python script to your filewave server. 
-
+  1. Create a custom field called fw_comment , or import the custom field from fw_comment.customfields in this directory. 
+  2. Create a custom field called fw_lastconnect ( datetime format ) , or import the custom field from fw_lastconnect.customfields in this directory.
+  3. Copy the python script to your filewave server. 
 
 ## Usage
 
