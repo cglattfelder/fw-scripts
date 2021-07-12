@@ -13,6 +13,7 @@ import json
 import psycopg2
 import unicodedata
 import os
+import time
 VERBOSE = False
 
 # input parsing
@@ -51,15 +52,18 @@ def remove_control_characters(s):  #https://stackoverflow.com/questions/4324790/
 
 def get_db_info():
 #fetch data for admin.user_status  
-    users = db_query("select unique_machine_id,comment from admin.user where unique_machine_id != '' order by unique_machine_id;")
+    users = db_query("select unique_machine_id,comment,timestamp with time zone 'epoch' + last_connected  * INTERVAL '1 second' from admin.user where unique_machine_id != '' order by unique_machine_id;")
     return(users)
 
-def update_fw_customfield(clientid,state):  # inject values into filewave custom field defined via custom_field_name
+def update_fw_customfield(clientid,state,lastconnect):  # inject values into filewave custom field defined via custom_field_name
     try:
         if state == None: return() # skip empty lines
         sanitised_state = json.dumps(remove_control_characters(state))  #remove all control characters, and make sure quotes are escaped properly.
-        req_updatetime = datetime.datetime.now().replace(microsecond=0).isoformat()+"Z"  #example 2021-06-16T15:24:19Z
-        req_data='{"CustomFields":{"'+custom_field_name+'":{"exitCode":null,"status":0,"updateTime":"'+req_updatetime+'","value":'+sanitised_state+' }}}'
+        req_updatetime = str(datetime.datetime.now(datetime.timezone.utc).replace(microsecond=0).isoformat()+"Z").replace('+00:00','')  #example 2021-06-16T15:24:19Z
+	#req_data='{"CustomFields":{"'+custom_field_name+'":{"exitCode":null,"status":0,"updateTime":"'+req_updatetime+'","value":'+sanitised_state+' }}}'
+        req_data='{"CustomFields":{"'+custom_field_name+'":{"exitCode":null,"status":0,"updateTime":"'+req_updatetime+'","value":'+sanitised_state+' },  \
+                  "fw_lastconnect":{"exitCode":null,"status":0,"updateTime":"'+req_updatetime+'","value":"'+lastconnect+'"} } }'
+
         req_uri = "inv/api/v1/client/"+clientid
         req_headers = {'Authorization':fw_token , 'Content-Type':'application/json' }
         customfield_r = requests.patch(fw_base_url+req_uri,headers=req_headers,json=json.loads(req_data))
@@ -75,4 +79,6 @@ def update_fw_customfield(clientid,state):  # inject values into filewave custom
 users=get_db_info()
 for record in users:
     if record[0] != '':
-         update_fw_customfield(record[0],record[1])
+         sanedate = str(record[2]).replace(' ','T').replace('+00:00','Z')
+         update_fw_customfield(record[0],record[1],sanedate)
+         time.sleep(0.2)

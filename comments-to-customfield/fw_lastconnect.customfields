@@ -1,0 +1,17 @@
+[
+    {
+        "choices": [
+        ],
+        "data_type": "datetime",
+        "default_value": "2069-12-31T23:00:00.000Z",
+        "description": "",
+        "display_name": "fw_lastconnect",
+        "field_name": "fw_lastconnect",
+        "is_global": true,
+        "metadata": {
+        },
+        "provider": 0,
+        "to_be_deleted": false,
+        "used_in_workflows": false
+    }
+]

@@ -1,10 +1,16 @@
 # comments_to_customfield
 
-If you need your ( Desktop ) FileWave client comments in inventory. 
+If you need your ( Desktop ) FileWave client comments in inventory.   
+Since updating custom field values via a script modifies the "Last Connect" value in inventory    
+this script also updates a custom field called fw_lastconnect , which contains the last time the    
+software deployment part of fwcld contacted filewave - that is , the value one is used to seeing   
+in the 'clients' view.   
+This will more accurately reflect when the client was last in touch with filewave. 
 
 ## Installation 
 
   Create a custom field called fw_comment , or import the custom field from fw_comment.customfields in this directory. 
+  Create a custom field called fw_lastconnect ( datetime format ) , or import the custom field from fw_lastconnect.customfields in this directory.
   Copy the python script to your filewave server. 
 
 
