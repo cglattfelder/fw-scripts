@@ -11,3 +11,6 @@ A repo containing various small projects related to [FileWave](https://www.filew
 [FileSet Popularity Contest](./fs-popularity/) - see how much use your Filesets get on Desktop Clients
 
 [Audit Log to Webhook](./auditlog-to-webhook/) - see who did what when, easily searchable
+
+[Google Sheets Reports](./google_sheets-reports/) - periodically export filewave information into google sheets
+
