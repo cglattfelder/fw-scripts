@@ -1,9 +1,9 @@
 #!/bin/bash
 # script to clean booster directories of files and fileset containers that have no associations
-# to create files-to-remove.txt , run this on filewave server: 
+# to create files-to-remove.txt , run this on filewave server:
 # /usr/local/filewave/postgresql/bin/psql mdm django -t -c "select id from admin.file where fileset_revision_id in ( select id from admin.fileset where id not in ( select distinct(fileset_revision_id) from admin.user_status where fileset_revision_id is not NULL ) ) ;" >./files-to-remove.txt
 
-# to create filesets-to-remove.txt , run this on the filewave server : 
+# to create filesets-to-remove.txt , run this on the filewave server :
 # /usr/local/filewave/postgresql/bin/psql mdm django -t -c "select id from admin.fileset where id not in ( select distinct(fileset_revision_id) from admin.user_status where fileset_revision_id is not NULL ) ;" >./filesets-to-remove.txt
 
 filesdeleted=0
@@ -12,20 +12,30 @@ counter=0
 
 owndir=$(pwd)
 
+# determine filewave server address
+server_address=$(awk -F'><' '/FWServerAddr/ {print $4}' /usr/local/etc/fwbooster.conf | tr -d '>')
+
+#download list of files to remove
+curl -s -o ./files-to-remove.txt https://$server_address/files-to-remove.txt
+
+#download list of fileset containers to remove
+curl -s -o ./filesets-to-remove.txt https://$server_address/filesets-to-remove.txt
+
+
 freespacebefore=$(df -h /private/var/FWBooster/Data\ Folder/|grep FWBooster)
 filestoremovecount=$(cat ./files-to-remove.txt|wc -l)
 
-for file in $(cat ./files-to-remove.txt) ; do 
-  if [ $file -lt 1 ] ; then continue ; fi  #skip strange entries in list 
+for file in $(cat ./files-to-remove.txt) ; do
+  if [ $file -lt 1 ] ; then continue ; fi  #skip strange entries in list
   directory=$(echo $file| sed -e 's/[0-9][0-9]$/00.FWD/')
-  if [ -d /private/var/FWBooster/Data\ Folder/$directory ] ; then 
+  if [ -d /private/var/FWBooster/Data\ Folder/$directory ] ; then
     cd /private/var/FWBooster/Data\ Folder/$directory
-    for instance in $(ls FW$file* 2>/dev/null) ; do 
+    for instance in $(ls FW$file* 2>/dev/null) ; do
       rm -f ./$instance
       ((filesdeleted++))
     done
   fi
-  if  (( $counter % 1000 == 0 )) ; then 
+  if  (( $counter % 1000 == 0 )) ; then
     echo "processed: $counter out of $filestoremovecount candidates ; deleted so far : $filesdeleted"
   fi
   ((counter++))
