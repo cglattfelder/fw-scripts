@@ -14,3 +14,5 @@ A repo containing various small projects related to [FileWave](https://www.filew
 
 [Google Sheets Reports](./google_sheets-reports/) - periodically export filewave information into google sheets
 
+[Status Lights](./status-lights/) - colour-coded desktop client activity check at a glance
+

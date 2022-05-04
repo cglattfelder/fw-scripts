@@ -1,0 +1,17 @@
+[
+    {
+        "choices": [
+        ],
+        "data_type": "string",
+        "default_value": null,
+        "description": "",
+        "display_name": "status_light",
+        "field_name": "status_light",
+        "is_global": true,
+        "metadata": {
+        },
+        "provider": 0,
+        "to_be_deleted": false,
+        "used_in_workflows": false
+    }
+]
